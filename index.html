@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="widget">
+    <header class="widget-header">
+      <div>
+        <div class="title-row">
+          <h1 id="widgetTitle">DAILY 🔥</h1>
+        </div>
+        <p id="dateRange"></p>
+      </div>
+      <button class="icon-button" id="settingsButton" title="Settings" aria-label="Settings">⚙</button>
+    </header>
+
+    <section class="week-navigation">
+      <button id="prevWeek" aria-label="Previous week">‹</button>
+      <button id="todayWeek">Today</button>
+      <button id="nextWeek" aria-label="Next week">›</button>
+    </section>
+
+    <section class="tracker" id="tracker">
+      <div class="grid-header">
+        <div class="habit-spacer"></div>
+        <div class="days" id="daysHeader"></div>
+      </div>
+      <div id="habitsGrid"></div>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog">
+    <form method="dialog" class="settings-panel">
+      <div class="settings-header">
+        <h2>Settings</h2>
+        <button value="cancel" class="icon-button">×</button>
+      </div>
+
+      <label>
+        Widget title
+        <input id="titleInput" type="text" />
+      </label>
+
+      <div class="habits-settings">
+        <div class="settings-section-title">
+          <h3>Habits</h3>
+          <button type="button" id="addHabit">+ Add habit</button>
+        </div>
+        <div id="habitEditor"></div>
+      </div>
+
+      <div class="settings-actions">
+        <button type="button" id="resetCurrentWeek" class="secondary">Reset displayed week</button>
+        <button type="button" id="saveSettings" class="primary">Save changes</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
