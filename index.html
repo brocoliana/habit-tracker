@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rastreador de Hábitos</title>
+  <link id="titleGoogleFont" rel="stylesheet">
+  <link id="bodyGoogleFont" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="widget">
+    <header class="widget-header">
+      <div>
+        <h1 id="widgetTitle">DIÁRIO 🔥</h1>
+        <p id="dateRange"></p>
+      </div>
+      <button class="icon-button" id="settingsButton" title="Configurações">⚙</button>
+    </header>
+
+    <section class="week-navigation">
+      <button id="prevWeek" title="Semana anterior">‹</button>
+      <button id="todayWeek">Hoje</button>
+      <button id="nextWeek" title="Próxima semana">›</button>
+    </section>
+
+    <section class="tracker">
+      <div class="grid-header">
+        <div></div>
+        <div class="days" id="daysHeader"></div>
+      </div>
+      <div id="habitsGrid"></div>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog">
+    <div class="settings-panel">
+      <div class="settings-header">
+        <h2>Configurações</h2>
+        <button type="button" id="closeSettings" class="icon-button">×</button>
+      </div>
+
+      <div class="settings-tabs">
+        <button class="tab active" data-tab="habits">Hábitos</button>
+        <button class="tab" data-tab="appearance">Aparência</button>
+      </div>
+
+      <section class="tab-content active" id="habitsTab">
+        <label>Título do widget<input id="titleInput" type="text"></label>
+        <div class="settings-section-title">
+          <h3>Meus hábitos</h3>
+          <button type="button" id="addHabit">+ Adicionar hábito</button>
+        </div>
+        <div id="habitEditor"></div>
+      </section>
+
+      <section class="tab-content" id="appearanceTab">
+        <h3 class="appearance-heading">Cores</h3>
+        <p class="section-description">Clique em uma cor para abrir o seletor.</p>
+        <div id="colorControls" class="color-controls"></div>
+
+        <h3 class="appearance-heading">Tipografia</h3>
+
+        <div class="font-section">
+          <div class="font-section-header">
+            <strong>Fonte do título</strong>
+            <span id="titleFontName" class="selected-font-name"></span>
+          </div>
+          <div class="font-browser" data-font-target="title">
+            <div class="font-search-row">
+              <input class="font-search" id="titleFontSearch" type="search" placeholder="Buscar fonte...">
+              <button type="button" class="browse-fonts" id="browseTitleFonts">Explorar</button>
+            </div>
+            <div class="font-preview title-preview" id="titleFontPreview">DIÁRIO 🔥</div>
+            <div class="font-results" id="titleFontResults"></div>
+            <button type="button" class="load-more-fonts" id="loadMoreTitleFonts">Ver mais fontes</button>
+          </div>
+        </div>
+
+        <div class="font-section">
+          <div class="font-section-header">
+            <strong>Fonte do corpo</strong>
+            <span id="bodyFontName" class="selected-font-name"></span>
+          </div>
+          <div class="font-browser" data-font-target="body">
+            <div class="font-search-row">
+              <input class="font-search" id="bodyFontSearch" type="search" placeholder="Buscar fonte...">
+              <button type="button" class="browse-fonts" id="browseBodyFonts">Explorar</button>
+            </div>
+            <div class="font-preview" id="bodyFontPreview">Arrumar quarto • Escovar os dentes • Limpar a areia</div>
+            <div class="font-results" id="bodyFontResults"></div>
+            <button type="button" class="load-more-fonts" id="loadMoreBodyFonts">Ver mais fontes</button>
+          </div>
+        </div>
+
+        <div class="typography-grid">
+          <label>Estilo do título
+            <select id="titleFontStyleInput">
+              <option value="italic">Itálico</option>
+              <option value="normal">Normal</option>
+            </select>
+          </label>
+          <label>Estilo do corpo
+            <select id="bodyFontStyleInput">
+              <option value="normal">Normal</option>
+              <option value="italic">Itálico</option>
+            </select>
+          </label>
+        </div>
+
+        <label>Tamanho do título <span id="titleFontSizeValue"></span>
+          <input type="range" id="titleFontSizeInput" min="12" max="48" step="1">
+        </label>
+
+        <label>Tamanho do texto dos hábitos <span id="bodyFontSizeValue"></span>
+          <input type="range" id="bodyFontSizeInput" min="10" max="24" step="1">
+        </label>
+
+        <h3 class="appearance-heading">Formato e espaçamento</h3>
+        <label>Arredondamento do widget <span id="radiusValue"></span>
+          <input type="range" id="radiusInput" min="0" max="40" step="1">
+        </label>
+
+        <label>Arredondamento das marcações <span id="cellRadiusValue"></span>
+          <input type="range" id="cellRadiusInput" min="0" max="24" step="1">
+        </label>
+
+        <label>Espaçamento entre as marcações <span id="gapValue"></span>
+          <input type="range" id="gapInput" min="0" max="20" step="1">
+        </label>
+      </section>
+
+      <div class="settings-actions">
+        <button type="button" id="resetCurrentWeek" class="secondary">Limpar semana</button>
+        <div>
+          <button type="button" id="resetAppearance" class="secondary">Restaurar aparência</button>
+          <button type="button" id="saveSettings" class="primary">Salvar alterações</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="colorDialog">
+    <div class="color-panel">
+      <div class="settings-header">
+        <h2 id="colorDialogTitle">Escolher cor</h2>
+        <button type="button" id="closeColorPicker" class="icon-button">×</button>
+      </div>
+
+      <div class="picker-layout">
+        <div>
+          <div id="colorSquare" class="color-square">
+            <div id="colorSquareCursor" class="color-square-cursor"></div>
+          </div>
+          <input id="hueSlider" class="hue-slider" type="range" min="0" max="360" value="0">
+        </div>
+        <div class="color-preview" id="colorPreview"></div>
+      </div>
+
+      <div class="color-values">
+        <label>Matiz (H)<input id="hInput" type="number" min="0" max="360"></label>
+        <label>Saturação (S)<input id="sInput" type="number" min="0" max="100"></label>
+        <label>Brilho (B)<input id="bInput" type="number" min="0" max="100"></label>
+      </div>
+
+      <div class="color-values">
+        <label>Vermelho<input id="rInput" type="number" min="0" max="255"></label>
+        <label>Verde<input id="gInput" type="number" min="0" max="255"></label>
+        <label>Azul<input id="bRgbInput" type="number" min="0" max="255"></label>
+      </div>
+
+      <label>Código HEX<input id="hexInput" type="text" maxlength="7"></label>
+
+      <div class="settings-actions">
+        <span></span>
+        <div>
+          <button type="button" id="cancelColor" class="secondary">Cancelar</button>
+          <button type="button" id="applyColor" class="primary">Aplicar cor</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
